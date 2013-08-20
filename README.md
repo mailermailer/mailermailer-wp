@@ -38,21 +38,21 @@ if you have any questions regarding this plugin. However, make sure to check out
 
 ## Frequently Asked Questions
 
-### What is MailerMailer?
+#### What is MailerMailer?
 
 [MailerMailer](http://www.mailermailer.com/features/index.rwp) is a powerful email marketing tool made easy. 
 Send email newsletters and marketing messages with our do-it-yourself email marketing service.
 
-### Where can I find my API key?
+#### Where can I find my API key?
 
 API keys are available upon request. If you'd like one, please visit our [API docs](http://www.mailermailer.com/api/getting-started/index.rwp).
 
-### I just changed my signup form on MailerMailer. How do I update the widget?
+#### I just changed my signup form on MailerMailer. How do I update the widget?
 
 Navigate to the MailerMailer Settings page in your admin panel (Settings > MailerMailer Settings) and click
 on 'Refresh Form.' That's it! If the update succeeded you'll be greeted with a success message.
 
-### I just received an error message saying 'An error has occurred.' What should I do?
+#### I just received an error message saying 'An error has occurred.' What should I do?
 
 Please contact our [support team](http://www.mailermailer.com/support/index.rwp) with your problem and we'll do our best to solve it.
 The plugin logs any MailerMailer specific errors, so if you have access to the logs, provide those entries when contacting our support team.
