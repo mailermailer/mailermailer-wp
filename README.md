@@ -25,7 +25,7 @@ Should you modify your signup form on MailerMailer, you'll be able to easily upd
 1. Place the unzipped 'mailermailer' plugin folder into '/wp-content/plugins/', or use WordPress's built-in Plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Setup the plugin under Settings > MailerMailer Settings
-4. Enter your API key under 'API Settings.' If you don't have an API key, [request one](http://www.mailermailer.com/api/getting-started/index.rwp).
+4. Enter your API key under 'API Settings.' If you don't have an API key, request one at support@mailermailer.com.
 5. Customize your form options and appearance under 'Form Settings.'
 
 Add the form to your site through either a widget or shortcode
