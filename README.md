@@ -6,8 +6,7 @@ MailerMailer's official Wordpress plugin
 
 The MailerMailer plugin allows you to easily add your signup form to your WordPress 3.5 or higher site through a widget or shortcode.
 
-In order to use this plugin you must have an API key provided by MailerMailer. If you don't have a 
-[MailerMailer](http://www.mailermailer.com/index.rwp) account, you're welcome to signup for a [free trial](https://www.mailermailer.com/signup.rwp) today.
+In order to use this plugin you must have an API key provided by MailerMailer.
 
 After plugin installation, you'll be asked to enter your API key so that we can retrieve your form. You'll then be able to customize the form appearance before you add it to your site. 
 
@@ -25,7 +24,7 @@ Should you modify your signup form on MailerMailer, you'll be able to easily upd
 1. Place the unzipped 'mailermailer' plugin folder into '/wp-content/plugins/', or use WordPress's built-in Plugin installer
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Setup the plugin under Settings > MailerMailer Settings
-4. Enter your API key under 'API Settings.' If you don't have an API key, request one at support@mailermailer.com.
+4. Enter your API key under 'API Settings.' If you don't have an API key, [request one](http://www.mailermailer.com/api/getting-started/index.rwp).
 5. Customize your form options and appearance under 'Form Settings.'
 
 Add the form to your site through either a widget or shortcode
@@ -45,7 +44,7 @@ Send email newsletters and marketing messages with our do-it-yourself email mark
 
 #### Where can I find my API key?
 
-API keys are available upon request. If you'd like one, please visit our [API docs](http://www.mailermailer.com/api/getting-started/index.rwp).
+API keys are available upon request. If you'd like one, please email us at support@mailermailer.com.
 
 #### I just changed my signup form on MailerMailer. How do I update the widget?
 
