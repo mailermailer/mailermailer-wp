@@ -1,0 +1,88 @@
+/*
+* Widget Styles
+*/
+
+div#mm_signup_form_content {
+  margin-bottom: 30px;
+}
+
+form#mm_signup_form {
+  margin-bottom: 10px;
+  padding: 15px;  
+}
+
+form#mm_signup_form div {
+  margin: 3px 0 12px 0;
+}
+
+form#mm_signup_form div div {
+  margin-bottom: 0;
+}
+
+form#mm_signup_form input {
+  margin: 3px 0;
+}
+
+form#mm_signup_form input[type='text'], form#mm_signup_form select {
+  border: 1px solid #aeaeae;
+  padding: 5px;
+}
+
+form#mm_signup_form input[type='text'] {
+  width: 140px;  
+}
+
+form#mm_signup_form select {
+  width: 152px;  
+}
+
+form#mm_signup_form div.formtip {
+  font-size: .9em;
+  font-style: italic;
+  margin-top: -5px;
+}
+
+form#mm_signup_form em {
+  color: red;
+}
+
+/*
+* Widget Success and Error Message Styles
+*/
+form#mm_signup_form #mm_msg {
+  font-weight: bold;
+  margin: 0;  
+}
+
+.mm_display_error, .mm_display_success {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.mm_display_error {
+  color: red;
+}
+
+.mm_display_success {
+  color: green;
+}
+
+/*
+* Missing Field Styles
+*/
+form#mm_signup_form input.warning {
+  background-color: #F9F2F1;
+  border: 1px solid #FDCEC4;
+}
+
+form#mm_signup_form select.warning {
+  background-color: #F9F2F1;
+  border: 1px solid #FDCEC4;
+}
+
+form#mm_signup_form div.checkbox-warning {
+  background-color: #F9F2F1;
+  border: 1px solid #FDCEC4;
+  width: 100%;
+  padding: 0;
+}
