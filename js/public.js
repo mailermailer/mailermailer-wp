@@ -27,15 +27,15 @@ Submit form
     // gather data
     var missing = data.missing;
     var message = data.message;
-    var subscriber = data.subscriber;
+    var member = data.member;
     var check_message = new RegExp('class="mm_display_success"', 'i');
     
     // display message
     $('#mm_msg').html(message);
 
     // highlight missing fields
-    for (var field in subscriber) {
-      if (subscriber.hasOwnProperty(field)) {
+    for (var field in member) {
+      if (member.hasOwnProperty(field)) {
         var fieldname = 'mm_'+field;
         var checkboxes = $('#'+fieldname+'_chbx');
         

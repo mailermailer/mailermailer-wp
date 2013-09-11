@@ -34,7 +34,7 @@ class MAILAPI_Client
     }
 
     /**
-     * Returns the fields needed to populate an add subscriber form.
+     * Returns the fields needed to create a list member or to create/populate a signup form.
      *
      * @return formfields_struct | MAILAPI_Error
      */
@@ -46,37 +46,37 @@ class MAILAPI_Client
     }
 
     /**
-     * Add the specified subscriber record to the account email list.
+     * Add the specified member record to the account email list.
      *
-     * @param array   $subscriber a subscriber struct
+     * @param array   $member a member struct
      * @param boolean $send_invite flag to send double opt-in confirmation message, defaults to true
      * @param boolean $send_welcome flag to send welcome message, defaults to false
      * @return true | MAILAPI_Error
      */
-    public function addSubscriber($subscriber, $send_invite = true, $send_welcome = false)
+    public function addMember($member, $send_invite = true, $send_welcome = false)
     {
-        $params                     = array();
-        $params['subscriber']       = php_xmlrpc_encode($subscriber);
-        $params['send_invite']      = php_xmlrpc_encode($send_invite);
-        $params['send_welcome']     = php_xmlrpc_encode($send_welcome);
-        $response = $this->mailapi_call->executeMethod('addSubscriber', $params);
+        $params                   = array();
+        $params['member']         = php_xmlrpc_encode($member);
+        $params['send_invite']    = php_xmlrpc_encode($send_invite);
+        $params['send_welcome']   = php_xmlrpc_encode($send_welcome);
+        $response = $this->mailapi_call->executeMethod('addMember', $params);
         return MAILAPI_Client::getResult($response);
     }
 
     /**
-     * Unsubscribe the subscriber email address from the account email list.
+     * Unsubscribe the email address from the account email list.
      *
-     * @param string $subscriber_email email of the subscriber to unsubscribe
+     * @param string $user_email email of the member to unsubscribe
      * @return true | MAILAPI_Error
      */
-    public function unsubSubscriber($subscriber_email)
+    public function unsubMember($user_email)
     {
-        $params                       = array();
-        $params['subscriber_email']   = php_xmlrpc_encode($subscriber_email);
-        $response = $this->mailapi_call->executeMethod('unsubSubscriber', $params);
+        $params                 = array();
+        $params['user_email']   = php_xmlrpc_encode($user_email);
+        $response = $this->mailapi_call->executeMethod('unsubMember', $params);
         return MAILAPI_Client::getResult($response);
     }
-    
+
     /**
      * Formats the response as necessary.
      *

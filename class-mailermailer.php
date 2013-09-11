@@ -25,7 +25,7 @@ class MailerMailer
 { 
 
   // Plugin version, used for cache-busting of style and script file references.
-  protected $version = '1.0.0';
+  protected $version = '1.0.1';
 
   // Unique identifier for your plugin.
   protected $plugin_slug = 'mailermailer';
@@ -207,7 +207,7 @@ class MailerMailer
   }
 
   /**
-  * Signup a subscriber based on the $_POST arguments recieved.
+  * Signup a member based on the $_POST arguments recieved.
   * Display success or error message based on the result.
   *
   * Sets success/error message.
@@ -217,7 +217,7 @@ class MailerMailer
   public function submit_form()
   {
     $formfields = get_option('mm_formfields_struct');
-    $subscriber = array();
+    $member = array();
     $missing = array();
     $message = '';
 
@@ -252,7 +252,7 @@ class MailerMailer
       if ($field['required'] && (empty($user_input) || $user_input == "--" || $user_input[0] == "--")) {
         $missing[ $name ] = $field['description'];
       }
-      $subscriber[ $field['fieldname'] ] = $user_input;
+      $member[ $field['fieldname'] ] = $user_input;
     }
 
     if (!empty($missing)) {
@@ -261,7 +261,7 @@ class MailerMailer
     } else {
       $mailapi = new MAILAPI_Client($opts_api['mm_apikey']);
 
-      $added = $mailapi->addSubscriber($subscriber);
+      $added = $mailapi->addMember($member);
 
       if (MAILAPI_Error::isError($added)) {
         $message = '<span class="mm_display_error">' . $this->errors($added) . '</span>';
@@ -273,7 +273,7 @@ class MailerMailer
     return array(
       'message' => $message,
       'missing' => $missing,
-      'subscriber' => $subscriber,
+      'member' => $member,
     );
   }
 
