@@ -90,65 +90,67 @@ function mailermailer_display_signup_form()
    
   // go through all the form fields 
   foreach ($formfields as $field) {
-    
-    $name = 'mm_' . $field['fieldname'];
 
-    // Display name of input needed and * if required
-    echo '<label>' . $field['description'];
-    if ($field['required']) {
-        echo ' <em>*</em>';
-    }
-    echo '</label>';
+    if ($field['visible']) { // display only visible fields
     
-    // render open_text fields
-    if ($field['type'] == 'open_text' && $field['visible']) {
-      $maxlength = $field['attributes']['length'];
-      echo '<div><input type="text" name="' . $name . '" id="' . $name . '" maxlength="' . $maxlength . '"/></div>';
-    }
+      $name = 'mm_' . $field['fieldname'];
 
-    // render dropdown menus for states
-    if ($field['type'] == 'state' && $field['visible']) {
-      echo mailermailer_get_states();
-      echo '<div><input id="' . $name . '_other" type="text" name="' . $name . '_other" maxlength="20"/></div>';
-    }
-    
-    // render dropdown menus for countries
-    if ($field['type'] == 'country' && $field['visible']) {
-      echo mailermailer_get_countries();
-    }
-    
-    // render select_types fields
-    if ($field['type'] == 'select' && $field['visible']) {
+      // Display name of input needed and * if required
+      echo '<label>' . $field['description'];
+      if ($field['required']) {
+          echo ' <em>*</em>';
+      }
+      echo '</label>';
       
-      // Sort elements in the order specified by the user
-      ksort($field['choices']);
+      // render open_text fields
+      if ($field['type'] == 'open_text') {
+        $maxlength = $field['attributes']['length'];
+        echo '<div><input type="text" name="' . $name . '" id="' . $name . '" maxlength="' . $maxlength . '"/></div>';
+      }
+
+      // render dropdown menus for states
+      if ($field['type'] == 'state') {
+        echo mailermailer_get_states();
+        echo '<div><input id="' . $name . '_other" type="text" name="' . $name . '_other" maxlength="20"/></div>';
+      }
       
-      // if multiple choices can be selected
-      if ($field['attributes']['select_type'] == 'multi') {
+      // render dropdown menus for countries
+      if ($field['type'] == 'country') {
+        echo mailermailer_get_countries();
+      }
+      
+      // render select_types fields
+      if ($field['type'] == 'select') {
         
-        echo '<div id="' . $name . '_chbx">';
+        // Sort elements in the order specified by the user
+        ksort($field['choices']);
+        
+        // if multiple choices can be selected
+        if ($field['attributes']['select_type'] == 'multi') {
+          
+          echo '<div id="' . $name . '_chbx">';
 
-        foreach ($field['choices'] as $key => $value) { 
-          echo '<div><input id="' . $name . '" type="checkbox" name="' . $name . '_' . $key . '" value="' . $key . '"/>&nbsp;' . $value . '</div>';
+          foreach ($field['choices'] as $key => $value) { 
+            echo '<div><input id="' . $name . '" type="checkbox" name="' . $name . '_' . $key . '" value="' . $key . '"/>&nbsp;' . $value . '</div>';
+          }
+
+          echo '</div>';
+
+        // if only once choice can be selected
+        } else {
+          echo '<div><select id="' . $name . '" name = "' . $name . '">';
+          echo '<option value="--" selected="selected">--</option>';
+          foreach($field['choices'] as $key => $value){
+            echo '<option value= "' . $key . '" >' . $value . '</option>';
+          }
+          echo '</select></div>';
         }
-
-        echo '</div>';
-
-      // if only once choice can be selected
-      } else {
-        echo '<div><select id="' . $name . '" name = "' . $name . '">';
-        echo '<option value="--" selected="selected">--</option>';
-        foreach($field['choices'] as $key => $value){
-          echo '<option value= "' . $key . '" >' . $value . '</option>';
-        }
-        echo '</select></div>';
+      }
+      
+      if(isset($field['formtip'])) {
+        echo '<div class="formtip">' . $field['formtip'] . '</div>';
       }
     }
-    
-    if(isset($field['formtip'])) {
-      echo '<div class="formtip">' . $field['formtip'] . '</div>';
-    }
-
   }
 }
 
