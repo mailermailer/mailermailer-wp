@@ -3,7 +3,7 @@ Contributors: mailermailer
 Tags: mailermailer, email, newsletter, signup, marketing, plugin, widget, forms, email marketing
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,10 +69,16 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 
 == Upgrade Notice ==
 
+= 1.0.2 =
+* Fix bug where hidden fields were being displayed on the signup form
+
 = 1.0.1 =
 * Update mailermailer-api-php wrapper to version 1.0.4
 
 == Changelog ==
+
+= 1.0.2 =
+* Fix bug where hidden fields were being displayed on the signup form
 
 = 1.0.1 =
 * Update mailermailer-api-php wrapper to version 1.0.4
