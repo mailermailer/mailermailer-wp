@@ -67,6 +67,8 @@ class MailerMailer
     add_action('admin_menu', array($this, 'add_settings_page'));
 
     add_action('init', array($this, 'request_hanlder'));
+
+    $this->set_default_values();
   }
 
   /**
@@ -122,7 +124,6 @@ class MailerMailer
       } else {
         add_settings_error('mailermailer_api', 'invalid-api-key-s', 'API key verified.', 'updated');
         $this->get_formfields($input['mm_apikey'], 'register');
-        $this->set_default_values();
       }
     }
     return $input;
@@ -285,6 +286,7 @@ class MailerMailer
   public function set_default_values()
   {
     $opts = (array) get_option('mailermailer');
+    $opts_api = (array) get_option('mailermailer_api');
 
     // store default values if they don't exist
     if (!$opts['mm_user_form_title']) {
@@ -310,8 +312,14 @@ class MailerMailer
     if (!$opts['mm_text_color']) {
       $opts['mm_text_color'] = '000000';
     }
+    
+    if (!$opts_api['mm_apikey']) {
+      $opts_api['mm_apikey'] = '';
+    }
 
     update_option('mailermailer', $opts);
+    update_option('mailermailer_api', $opts_api);
+    update_option('mailermailer_refresh', array('refresh' => true));
   }
 
   /** 
