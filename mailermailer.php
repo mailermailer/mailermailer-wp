@@ -3,11 +3,11 @@
 Plugin Name: MailerMailer
 Plugin URI: http://wordpress.org/extend/plugins/mailermailer/
 Description: The mailermailer plugin allows you to add your own signup form to your site.
-Version: 1.0.2
+Version: 1.0.3
 Author: mailermailer
 Author URI: http://www.mailermailer.com/api/
 */
-/*  Copyright 2013  MailerMailer  (email : support@mailermailer.com)
+/*  Copyright 2014  MailerMailer  (email : support@mailermailer.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
