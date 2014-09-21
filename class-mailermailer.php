@@ -143,6 +143,10 @@ class MailerMailer
         $input[ $key ] = str_replace('px', '', $value);
       }
     }
+
+    if (!array_key_exists('mm_powered_by_tagline', $input)) {
+      $input['mm_powered_by_tagline'] = 'no';
+    }
     return $input;
   }
 
