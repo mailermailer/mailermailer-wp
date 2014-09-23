@@ -3,7 +3,7 @@ Contributors: mailermailer
 Tags: mailermailer, email, newsletter, signup, marketing, plugin, widget, forms, email marketing
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 
 == Upgrade Notice ==
 
+= 1.0.4 =
+* Fix bug where 'Powered by' tagline would display despite being disabled
+
 = 1.0.3 =
 * Update tested version to 4.0
 * Update mailermailer-api-php wrapper to version 1.0.5
@@ -81,6 +84,9 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 * Update mailermailer-api-php wrapper to version 1.0.4
 
 == Changelog ==
+
+= 1.0.4 =
+* Fix bug where 'Powered by' tagline would display despite being disabled
 
 = 1.0.3 =
 * Update tested version to 4.0
