@@ -5,7 +5,7 @@
  *
  * @package   mailermailer-api-php
  * @author    MailerMailer <support@mailermailer.com>
- * @copyright 2001-2014 MailerMailer LLC
+ * @copyright 2001-2016 MailerMailer LLC
  * @license   This program is free software; you can redistribute it and/or modify
  *            it under the terms of the GNU General Public License as published by
  
@@ -21,7 +21,7 @@
  *            along with this program; if not, write to the Free Software
  *            Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *            MA 02110-1301, USA.
- * @version   1.0.3
+ * @version   1.0.6
  * @link      http://www.mailermailer.com/api/index.rwp
  */
 

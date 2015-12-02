@@ -5,7 +5,7 @@
 
 define('MAILAPI_ENDPOINT', 'https://api.mailermailer.com/1.0/');
 
-define('MAILAPI_VERSION', '1.0.5');
+define('MAILAPI_VERSION', '1.0.6');
 
 define ('MAILAPI_PARTNER', 'MM');
 

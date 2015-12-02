@@ -1,6 +1,6 @@
 # mailermailer-api-php
 
-A PHP wrapper using the [PHPXMLRPC](http://phpxmlrpc.sourceforge.net/) library to connect to the MailerMailer API.
+A PHP wrapper using the [PHPXMLRPC](http://phpxmlrpc.sourceforge.net/) library to connect to the MailerMailer API
 
 ##Requirements
 
@@ -8,7 +8,7 @@ PHP 5
 
 ## Installation
 
-Just place mailermailer-api-php in a directory accessible by your application
+Just place mailermailer-api-php in a directory accessible by your application.
 
 ## Usage
 
