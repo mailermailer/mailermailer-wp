@@ -181,6 +181,7 @@ return '<div><select id="mm_user_country" name="mm_user_country">
   <option value="--" selected="selected">--</option>
   <option value="us" >United States</option>
   <option value="ca" >Canada</option>
+  <option value="--" disabled="disabled">--</option>
   <option value="af" >Afghanistan</option>
   <option value="ax" >Aland Islands</option>
   <option value="al" >Albania</option>
@@ -437,6 +438,7 @@ function mailermailer_get_states()
 {
 return '<div><select id="mm_user_state" name="mm_user_state">
   <option value="--" selected="selected">--</option>
+  <option value="USA" style="font-weight: bold; font-style: italic; color: #000;" disabled="disabled">USA</option>
   <option value="al" >Alabama</option>
   <option value="ak" >Alaska</option>
   <option value="az" >Arizona</option>
@@ -488,7 +490,8 @@ return '<div><select id="mm_user_state" name="mm_user_state">
   <option value="wv" >West Virginia</option>
   <option value="wi" >Wisconsin</option>
   <option value="wy" >Wyoming</option>
-  <option value="--">--</option>
+  <option value="" disabled="disabled"></option>
+  <option value="Canada" style="font-weight: bold; font-style: italic; color: #000;" disabled="disabled">Canada</option>
   <option value="ab" >Alberta</option>
   <option value="bc" >British Columbia</option>
   <option value="mb" >Manitoba</option>
@@ -502,7 +505,7 @@ return '<div><select id="mm_user_state" name="mm_user_state">
   <option value="qc" >Quebec</option>
   <option value="sk" >Saskatchewan</option>
   <option value="yt" >Yukon</option>
-  <option value="--">--</option>
+  <option value="--" disabled="disabled">--</option>
   <option value="Other" >Other --&gt;</option>
   </select></div>';
 }
