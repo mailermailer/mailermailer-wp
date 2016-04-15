@@ -52,6 +52,7 @@ function mailermailer_signup_form($args = array())
   extract($args);
 
   $opts = get_option('mailermailer');
+  $captcha_keys = get_option('mailermailer_captcha_keys');
   $title = $opts['mm_user_form_title'];
   $mm_obj = MailerMailer::get_instance();
   $custom_css = $mm_obj->custom_css();
@@ -68,6 +69,9 @@ function mailermailer_signup_form($args = array())
       <div id="mm_msg"><?php echo MailerMailer::messages(); ?></div>
       <?php mailermailer_display_signup_form(); ?>
       <div><em>*</em> denotes a required field</div>
+      <?php if ($captcha_keys['mm_public_captcha_key'] && $captcha_keys['mm_public_captcha_key']) { ?>
+      <div class="g-recaptcha" data-size="compact" data-sitekey=<?php echo $captcha_keys['mm_public_captcha_key']; ?>></div>
+      <?php } ?> 
       <input type="submit" name="mm_signup_submit" id="mm_signup_submit" value="Subscribe" class="button" />
     </form>
     <?php if ($opts['mm_powered_by_tagline'] == 'yes') {

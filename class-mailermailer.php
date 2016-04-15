@@ -106,6 +106,7 @@ class MailerMailer
     register_setting( 'mailermailer_api_settings', 'mailermailer_api', array($this, 'register_apikey'));
     register_setting( 'mailermailer_options_group', 'mailermailer', array($this, 'sanitize_preferences'));
     register_setting( 'mailermailer_form_refresh', 'mailermailer_refresh', array($this, 'refresh_form'));
+    register_setting( 'mailermailer_captcha_settings', 'mailermailer_captcha_keys', array($this, 'register_captcha_keys'));
   }
 
   /**
@@ -161,6 +162,16 @@ class MailerMailer
     $this->get_formfields($opts_api['mm_apikey'], 'refresh');
     return $input;
   }
+
+  /**
+  * Register CAPTCHA keys
+  *
+  * @return    string    User input.
+  */
+  public function register_captcha_keys($input)
+  {
+    return $input;
+  } 
 
   /**
   * Retrieves the signup form from MailerMailer. Displays appropriate
@@ -291,6 +302,7 @@ class MailerMailer
   {
     $opts = (array) get_option('mailermailer');
     $opts_api = (array) get_option('mailermailer_api');
+    $captcha_keys = (array) get_option('mailermailer_captcha_keys');
 
     // store default values if they don't exist
     if (!$opts['mm_user_form_title']) {
@@ -321,9 +333,18 @@ class MailerMailer
       $opts_api['mm_apikey'] = '';
     }
 
+    if (!$captcha_keys['mm_public_captcha_key']) {
+      $captcha_keys['mm_public_captcha_key'] = '';
+    }
+
+    if (!$captcha_keys['mm_private_captcha_key']) {
+      $captcha_keys['mm_private_captcha_key'] = '';
+    }
+
     update_option('mailermailer', $opts);
     update_option('mailermailer_api', $opts_api);
     update_option('mailermailer_refresh', array('refresh' => true));
+    update_option('mailermailer_captcha_keys', $captcha_keys);
   }
 
   /** 
@@ -374,6 +395,7 @@ class MailerMailer
   {
     $opts = (array) get_option('mailermailer');
     $opts_api = (array) get_option('mailermailer_api');
+    $captcha_keys = (array) get_option('mailermailer_captcha_keys');
     $connected = $this->is_connected($opts_api['mm_apikey']);
     include_once( 'includes/views/admin.php' );
   }
@@ -484,6 +506,7 @@ class MailerMailer
   public function enqueue_scripts()
   {
     wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery', 'jquery-form' ), $this->version );
+    wp_enqueue_script( $this->plugin_slug . '-plugin-script-captcha', 'https://www.google.com/recaptcha/api.js');
     wp_localize_script( $this->plugin_slug . '-plugin-script', 'mailermailer_params', array( 'mm_url' => trailingslashit(home_url()) ) );
   }
 

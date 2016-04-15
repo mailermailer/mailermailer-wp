@@ -16,6 +16,7 @@ function mailermailer_delete_settings()
   delete_option('mailermailer_api');
   delete_option('mailermailer_refresh');
   delete_option('mm_formfields_struct');
+  delete_option('mailermailer_captcha_keys');
 }
 
 mailermailer_delete_settings();
