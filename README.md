@@ -27,7 +27,8 @@ Should you modify your signup form on MailerMailer, you'll be able to easily upd
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Setup the plugin under Settings > MailerMailer Settings
 4. Enter your API key under 'API Settings.'
-5. Customize your form options and appearance under 'Form Settings.'
+5. Set up a CAPTCHA under 'CAPTCHA Settings' (optional).
+6. Customize your form options and appearance under 'Form Settings.'
 
 Add the form to your site through either a widget or shortcode
 * Widget: Under Appearance > Widgets, Look for 'MailerMailer Widget' and drag it to the desired widget location
@@ -47,6 +48,10 @@ Send email newsletters and marketing messages with our do-it-yourself email mark
 #### Where can I find my API key?
 
 API keys are available upon request. If you'd like one, please email us at support@mailermailer.com.
+
+#### How do I set up the CAPTCHA?
+
+If you'd like to add a CAPTCHA to your MailerMailer signup form, you'll first need to [follow the instructions on Google](https://developers.google.com/recaptcha/docs/start) for obtaining an API key pair. Once you have the pair of keys, you can enter then under Settings > MailerMailer Settings > CAPTCHA Settings.
 
 #### I just changed my signup form on MailerMailer. How do I update the widget?
 
