@@ -25,7 +25,7 @@ class MailerMailer
 { 
 
   // Plugin version, used for cache-busting of style and script file references.
-  protected $version = '1.1.0';
+  protected $version = '1.2.0';
 
   // Unique identifier for your plugin.
   protected $plugin_slug = 'mailermailer';
@@ -247,7 +247,7 @@ class MailerMailer
       $valid = $this->is_recaptcha_valid($_POST['g-recaptcha-response']);
       if (!$valid) {
         $can_continue = false;
-        $message = '<span class="mm_display_error">reCAptcha is invalid</span>';
+        $message = '<span class="mm_display_error">reCAPTCHA is invalid</span>';
       }
     }
 

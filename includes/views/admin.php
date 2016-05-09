@@ -43,7 +43,7 @@
               <tr valign="top">
                 <th scope="row">
                   <label>
-                    Your Public Key
+                    Your Site Key
                   </label>
                 </th>
                 <td>
