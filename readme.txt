@@ -2,8 +2,8 @@
 Contributors: mailermailer
 Tags: mailermailer, email, newsletter, signup, marketing, plugin, widget, forms, email marketing
 Requires at least: 3.5
-Tested up to: 4.4
-Stable tag: 1.1.0
+Tested up to: 4.5.2
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,10 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 3. Add the signup form to your site!
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+* Update tested version to 4.5.2
+* Add support for reCAPTCHA
 
 = 1.1.0 =
 * Update tested version to 4.4
