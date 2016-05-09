@@ -51,7 +51,7 @@ API keys are available upon request. If you'd like one, please email us at suppo
 
 #### How do I set up the CAPTCHA?
 
-If you'd like to add a CAPTCHA to your MailerMailer signup form, you'll first need to [follow the instructions on Google](https://developers.google.com/recaptcha/docs/start) for obtaining an API key pair. Once you have the pair of keys, you can enter then under Settings > MailerMailer Settings > CAPTCHA Settings.
+If you'd like to add a CAPTCHA to your MailerMailer signup form, you'll first need to [follow the instructions on Google](https://developers.google.com/recaptcha/docs/start) for obtaining an API key pair. Once you have the pair of keys, you can enter them under Settings > MailerMailer Settings > CAPTCHA Settings.
 
 #### I just changed my signup form on MailerMailer. How do I update the widget?
 
