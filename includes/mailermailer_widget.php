@@ -52,6 +52,7 @@ function mailermailer_signup_form($args = array())
   extract($args);
 
   $opts = get_option('mailermailer');
+  $captcha_keys = get_option('mailermailer_captcha_keys');
   $title = $opts['mm_user_form_title'];
   $mm_obj = MailerMailer::get_instance();
   $custom_css = $mm_obj->custom_css();
@@ -68,6 +69,18 @@ function mailermailer_signup_form($args = array())
       <div id="mm_msg"><?php echo MailerMailer::messages(); ?></div>
       <?php mailermailer_display_signup_form(); ?>
       <div><em>*</em> denotes a required field</div>
+      <?php if (!empty($captcha_keys['mm_public_captcha_key']) && !empty($captcha_keys['mm_private_captcha_key'])) { ?>
+      <div id= "mailermailer_captcha_container"></div>
+      <script type="text/javascript">
+        var mailermailerOnloadCallback = function() {
+          grecaptcha.render('mailermailer_captcha_container', {
+            'sitekey' : mailermailer_params.mm_pub_key,
+            'size' : 'compact'
+          });
+        };
+      </script>
+      <script src="https://www.google.com/recaptcha/api.js?onload=mailermailerOnloadCallback&render=explicit" async defer></script>
+      <?php } ?> 
       <input type="submit" name="mm_signup_submit" id="mm_signup_submit" value="Subscribe" class="button" />
     </form>
     <?php if ($opts['mm_powered_by_tagline'] == 'yes') {

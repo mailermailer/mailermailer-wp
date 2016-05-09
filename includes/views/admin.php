@@ -32,6 +32,44 @@
       </div>
 
       <?php if ($connected) { ?>
+
+      <div class="postbox" id="aiosp">
+        <form method="post" action="options.php">
+          <?php settings_fields('mailermailer_captcha_settings') ?>
+          <h3 class="hndle"><span>CAPTCHA Settings</span></h3>
+          <div class="inside">
+            Please enter your CAPTCHA keys
+            <table class="form-table">
+              <tr valign="top">
+                <th scope="row">
+                  <label>
+                    Your Public Key
+                  </label>
+                </th>
+                <td>
+                  <input type="text" class="regular-text" name="mailermailer_captcha_keys[mm_public_captcha_key]" id="mm_apikey" value="<?php echo $captcha_keys['mm_public_captcha_key']; ?>"/>
+                </td>
+              </tr>
+              <tr valign="top">
+                <th scope="row">
+                  <label>
+                    Your Private Key
+                  </label>
+                </th>
+                <td>
+                  <input type="text" class="regular-text" name="mailermailer_captcha_keys[mm_private_captcha_key]" id="mm_apikey" value="<?php echo $captcha_keys['mm_private_captcha_key']; ?>"/>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <input type="submit" name="Submit" value="Save Changes" class="button button-primary" />
+                </td>
+              </tr>    
+            </table>
+            <p class="description"><a href="https://developers.google.com/recaptcha/docs/start">Get CAPTCHA keys</a></p>
+          </div>  
+        </form>
+      </div>      
     
       <div class="postbox" id="aiosp">
         <form method="post" action="options.php">

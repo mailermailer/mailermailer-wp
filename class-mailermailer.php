@@ -106,6 +106,7 @@ class MailerMailer
     register_setting( 'mailermailer_api_settings', 'mailermailer_api', array($this, 'register_apikey'));
     register_setting( 'mailermailer_options_group', 'mailermailer', array($this, 'sanitize_preferences'));
     register_setting( 'mailermailer_form_refresh', 'mailermailer_refresh', array($this, 'refresh_form'));
+    register_setting( 'mailermailer_captcha_settings', 'mailermailer_captcha_keys', array($this, 'register_captcha_keys'));
   }
 
   /**
@@ -161,6 +162,16 @@ class MailerMailer
     $this->get_formfields($opts_api['mm_apikey'], 'refresh');
     return $input;
   }
+
+  /**
+  * Register CAPTCHA keys
+  *
+  * @return    string    User input.
+  */
+  public function register_captcha_keys($input)
+  {
+    return $input;
+  } 
 
   /**
   * Retrieves the signup form from MailerMailer. Displays appropriate
@@ -225,53 +236,67 @@ class MailerMailer
     $member = array();
     $missing = array();
     $message = '';
+    $captcha_keys = get_option('mailermailer_captcha_keys');
+    $recaptcha_enabled = !empty($captcha_keys['mm_public_captcha_key']) && !empty($captcha_keys['mm_private_captcha_key']);
+    $can_continue = true; // assume recaptcha is not enabled by default
 
     $opts_api = get_option('mailermailer_api');
 
-    // traverse through formfields and retrieve POST data
-    foreach ($formfields as $field) {
-      $name = 'mm_' . $field['fieldname'];
-      $user_input = array();
-      if ($field['type'] == 'select') { // select
-        if ($field['attributes']['select_type'] == 'multi') {
-          foreach ($field['choices'] as $key => $value) {
-            if (isset($_POST[ $name . '_' . $key ])) {
-              array_push($user_input, $_POST[ $name . '_' . $key ]);
-            }
-          }
-        } else {
-          if (isset($_POST[ $name ])) { // select_type single
-            array_push($user_input, $_POST[ $name ]);
-          }
-        }
-      } elseif ($field['type'] == 'state') { // state
-        if (isset($_POST[ $name ])) {
-          $user_input = (preg_match("/Other/i", $_POST[ $name ])) ? $_POST[ $name . '_other' ] : $_POST[ $name ];
-        }
-      } else {
-        if (isset($_POST[$name ])) { // open_text and country
-          $user_input = $_POST[ $name ];
-        }
+    // validate recaptcha
+    if ($recaptcha_enabled) {
+      $valid = $this->is_recaptcha_valid($_POST['g-recaptcha-response']);
+      if (!$valid) {
+        $can_continue = false;
+        $message = '<span class="mm_display_error">reCAptcha is invalid</span>';
       }
-
-      if ($field['required'] && (empty($user_input) || $user_input == "--" || $user_input[0] == "--")) {
-        $missing[ $name ] = $field['description'];
-      }
-      $member[ $field['fieldname'] ] = $user_input;
     }
 
-    if (!empty($missing)) {
-      // If we encounter missing fields no need to call API
-      $message = '<span class="mm_display_error">Required data is missing.</span>';
-    } else {
-      $mailapi = new MAILAPI_Client($opts_api['mm_apikey']);
+    if  ($can_continue) {
+      // traverse through formfields and retrieve POST data
+      foreach ($formfields as $field) {
+        $name = 'mm_' . $field['fieldname'];
+        $user_input = array();
+        if ($field['type'] == 'select') { // select
+          if ($field['attributes']['select_type'] == 'multi') {
+            foreach ($field['choices'] as $key => $value) {
+              if (isset($_POST[ $name . '_' . $key ])) {
+                array_push($user_input, $_POST[ $name . '_' . $key ]);
+              }
+            }
+          } else {
+            if (isset($_POST[ $name ])) { // select_type single
+              array_push($user_input, $_POST[ $name ]);
+            }
+          }
+        } elseif ($field['type'] == 'state') { // state
+          if (isset($_POST[ $name ])) {
+            $user_input = (preg_match("/Other/i", $_POST[ $name ])) ? $_POST[ $name . '_other' ] : $_POST[ $name ];
+          }
+        } else {
+          if (isset($_POST[$name ])) { // open_text and country
+            $user_input = $_POST[ $name ];
+          }
+        }
 
-      $added = $mailapi->addMember($member);
+        if ($field['required'] && (empty($user_input) || $user_input == "--" || $user_input[0] == "--")) {
+          $missing[ $name ] = $field['description'];
+        }
+        $member[ $field['fieldname'] ] = $user_input;
+      }
 
-      if (MAILAPI_Error::isError($added)) {
-        $message = '<span class="mm_display_error">' . $this->errors($added) . '</span>';
+      if (!empty($missing)) {
+        // If we encounter missing fields no need to call API
+        $message = '<span class="mm_display_error">Required data is missing.</span>';
       } else {
-        $message = '<span class="mm_display_success">Please check your e-mail for a confirmation message.</span>';
+        $mailapi = new MAILAPI_Client($opts_api['mm_apikey']);
+
+        $added = $mailapi->addMember($member);
+
+        if (MAILAPI_Error::isError($added)) {
+          $message = '<span class="mm_display_error">' . $this->errors($added) . '</span>';
+        } else {
+          $message = '<span class="mm_display_success">Please check your e-mail for a confirmation message.</span>';
+        }
       }
     }
 
@@ -279,7 +304,29 @@ class MailerMailer
       'message' => $message,
       'missing' => $missing,
       'member' => $member,
+      'captcha_enabled' => $recaptcha_enabled
     );
+  }
+
+  /**
+  * Check if the recieved recaptcha response is valid.
+  *
+  * @return    boolean    If the recaptcha has been verified returns true, false otherwise.
+  */
+  public function is_recaptcha_valid($recaptcha_response)
+  {
+    $captcha_keys = get_option('mailermailer_captcha_keys');
+
+    $args = array(
+      'body' => array(
+        'secret' => $captcha_keys['mm_private_captcha_key'], 
+        'response' => $recaptcha_response
+        )
+      );
+    $req = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $args );
+    $resp = json_decode(wp_remote_retrieve_body($req), true);
+
+    return isset( $resp['success'] ) && !!$resp['success'];
   }
 
   /**
@@ -291,6 +338,7 @@ class MailerMailer
   {
     $opts = (array) get_option('mailermailer');
     $opts_api = (array) get_option('mailermailer_api');
+    $captcha_keys = (array) get_option('mailermailer_captcha_keys');
 
     // store default values if they don't exist
     if (!$opts['mm_user_form_title']) {
@@ -321,9 +369,18 @@ class MailerMailer
       $opts_api['mm_apikey'] = '';
     }
 
+    if (!$captcha_keys['mm_public_captcha_key']) {
+      $captcha_keys['mm_public_captcha_key'] = '';
+    }
+
+    if (!$captcha_keys['mm_private_captcha_key']) {
+      $captcha_keys['mm_private_captcha_key'] = '';
+    }
+
     update_option('mailermailer', $opts);
     update_option('mailermailer_api', $opts_api);
     update_option('mailermailer_refresh', array('refresh' => true));
+    update_option('mailermailer_captcha_keys', $captcha_keys);
   }
 
   /** 
@@ -374,6 +431,7 @@ class MailerMailer
   {
     $opts = (array) get_option('mailermailer');
     $opts_api = (array) get_option('mailermailer_api');
+    $captcha_keys = (array) get_option('mailermailer_captcha_keys');
     $connected = $this->is_connected($opts_api['mm_apikey']);
     include_once( 'includes/views/admin.php' );
   }
@@ -483,8 +541,10 @@ class MailerMailer
   */
   public function enqueue_scripts()
   {
+    $captcha_keys = (array) get_option('mailermailer_captcha_keys');
+
     wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery', 'jquery-form' ), $this->version );
-    wp_localize_script( $this->plugin_slug . '-plugin-script', 'mailermailer_params', array( 'mm_url' => trailingslashit(home_url()) ) );
+    wp_localize_script( $this->plugin_slug . '-plugin-script', 'mailermailer_params', array( 'mm_url' => trailingslashit(home_url()), 'mm_pub_key' => $captcha_keys['mm_public_captcha_key'] ));
   }
 
 }
