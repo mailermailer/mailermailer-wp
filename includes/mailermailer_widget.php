@@ -69,8 +69,17 @@ function mailermailer_signup_form($args = array())
       <div id="mm_msg"><?php echo MailerMailer::messages(); ?></div>
       <?php mailermailer_display_signup_form(); ?>
       <div><em>*</em> denotes a required field</div>
-      <?php if ($captcha_keys['mm_public_captcha_key'] && $captcha_keys['mm_public_captcha_key']) { ?>
-      <div class="g-recaptcha" data-size="compact" data-sitekey=<?php echo $captcha_keys['mm_public_captcha_key']; ?>></div>
+      <?php if (!empty($captcha_keys['mm_public_captcha_key']) && !empty($captcha_keys['mm_private_captcha_key'])) { ?>
+      <div id= "mailermailer_captcha_container"></div>
+      <script type="text/javascript">
+        var mailermailerOnloadCallback = function() {
+          grecaptcha.render('mailermailer_captcha_container', {
+            'sitekey' : mailermailer_params.mm_pub_key,
+            'size' : 'compact'
+          });
+        };
+      </script>
+      <script src="https://www.google.com/recaptcha/api.js?onload=mailermailerOnloadCallback&render=explicit" async defer></script>
       <?php } ?> 
       <input type="submit" name="mm_signup_submit" id="mm_signup_submit" value="Subscribe" class="button" />
     </form>

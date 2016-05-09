@@ -28,6 +28,7 @@ Submit form
     var missing = data.missing;
     var message = data.message;
     var member = data.member;
+    var captcha_enabled = data.captcha_enabled;
     var check_message = new RegExp('class="mm_display_success"', 'i');
     
     // display message
@@ -66,6 +67,11 @@ Submit form
         this.reset();
       });
       $('#mm_is_javascript').val('yes');
+    }
+
+    // reset captcha
+    if ($.trim($('#mailermailer_captcha_container').html()).length) {
+      grecaptcha.reset();
     }
 
   }
