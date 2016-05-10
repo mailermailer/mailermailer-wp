@@ -28,9 +28,9 @@ Submit form
     var missing = data.missing;
     var message = data.message;
     var member = data.member;
-    var captcha_enabled = data.captcha_enabled;
+    var captcha_container = 'mailermailer_captcha_container';
     var check_message = new RegExp('class="mm_display_success"', 'i');
-    
+
     // display message
     $('#mm_msg').html(message);
 
@@ -69,9 +69,15 @@ Submit form
       $('#mm_is_javascript').val('yes');
     }
 
-    // reset captcha
-    if ($.trim($('#mailermailer_captcha_container').html()).length) {
-      grecaptcha.reset();
+    if ($.trim($('#'+captcha_container).html()).length) {
+      // reset captcha
+      grecaptcha.reset(); 
+      // highlight captcha if missing
+      if (missing.hasOwnProperty(captcha_container)) {
+        $('#'+captcha_container).addClass("captcha-warning");
+      } else {
+        $('#'+captcha_container).removeClass("captcha-warning");        
+      }
     }
 
   }

@@ -238,7 +238,6 @@ class MailerMailer
     $message = '';
     $captcha_keys = get_option('mailermailer_captcha_keys');
     $recaptcha_enabled = !empty($captcha_keys['mm_public_captcha_key']) && !empty($captcha_keys['mm_private_captcha_key']);
-    $can_continue = true; // assume recaptcha is not enabled by default
 
     $opts_api = get_option('mailermailer_api');
 
@@ -246,65 +245,61 @@ class MailerMailer
     if ($recaptcha_enabled) {
       $valid = $this->is_recaptcha_valid($_POST['g-recaptcha-response']);
       if (!$valid) {
-        $can_continue = false;
-        $message = '<span class="mm_display_error">reCAPTCHA is invalid</span>';
+        $missing[ 'mailermailer_captcha_container' ] = 'reCAPTCHA';
       }
     }
 
-    if  ($can_continue) {
-      // traverse through formfields and retrieve POST data
-      foreach ($formfields as $field) {
-        $name = 'mm_' . $field['fieldname'];
-        $user_input = array();
-        if ($field['type'] == 'select') { // select
-          if ($field['attributes']['select_type'] == 'multi') {
-            foreach ($field['choices'] as $key => $value) {
-              if (isset($_POST[ $name . '_' . $key ])) {
-                array_push($user_input, $_POST[ $name . '_' . $key ]);
-              }
+    // traverse through formfields and retrieve POST data
+    foreach ($formfields as $field) {
+      $name = 'mm_' . $field['fieldname'];
+      $user_input = array();
+      if ($field['type'] == 'select') { // select
+        if ($field['attributes']['select_type'] == 'multi') {
+          foreach ($field['choices'] as $key => $value) {
+            if (isset($_POST[ $name . '_' . $key ])) {
+              array_push($user_input, $_POST[ $name . '_' . $key ]);
             }
-          } else {
-            if (isset($_POST[ $name ])) { // select_type single
-              array_push($user_input, $_POST[ $name ]);
-            }
-          }
-        } elseif ($field['type'] == 'state') { // state
-          if (isset($_POST[ $name ])) {
-            $user_input = (preg_match("/Other/i", $_POST[ $name ])) ? $_POST[ $name . '_other' ] : $_POST[ $name ];
           }
         } else {
-          if (isset($_POST[$name ])) { // open_text and country
-            $user_input = $_POST[ $name ];
+          if (isset($_POST[ $name ])) { // select_type single
+            array_push($user_input, $_POST[ $name ]);
           }
         }
-
-        if ($field['required'] && (empty($user_input) || $user_input == "--" || $user_input[0] == "--")) {
-          $missing[ $name ] = $field['description'];
+      } elseif ($field['type'] == 'state') { // state
+        if (isset($_POST[ $name ])) {
+          $user_input = (preg_match("/Other/i", $_POST[ $name ])) ? $_POST[ $name . '_other' ] : $_POST[ $name ];
         }
-        $member[ $field['fieldname'] ] = $user_input;
+      } else {
+        if (isset($_POST[$name ])) { // open_text and country
+          $user_input = $_POST[ $name ];
+        }
       }
 
-      if (!empty($missing)) {
-        // If we encounter missing fields no need to call API
-        $message = '<span class="mm_display_error">Required data is missing.</span>';
+      if ($field['required'] && (empty($user_input) || $user_input == "--" || $user_input[0] == "--")) {
+        $missing[ $name ] = $field['description'];
+      }
+      $member[ $field['fieldname'] ] = $user_input;
+    }
+
+    if (!empty($missing)) {
+      // If we encounter missing fields no need to call API
+      $message = '<span class="mm_display_error">Required data is missing.</span>';
+    } else {
+      $mailapi = new MAILAPI_Client($opts_api['mm_apikey']);
+
+      $added = $mailapi->addMember($member);
+
+      if (MAILAPI_Error::isError($added)) {
+        $message = '<span class="mm_display_error">' . $this->errors($added) . '</span>';
       } else {
-        $mailapi = new MAILAPI_Client($opts_api['mm_apikey']);
-
-        $added = $mailapi->addMember($member);
-
-        if (MAILAPI_Error::isError($added)) {
-          $message = '<span class="mm_display_error">' . $this->errors($added) . '</span>';
-        } else {
-          $message = '<span class="mm_display_success">Please check your e-mail for a confirmation message.</span>';
-        }
+        $message = '<span class="mm_display_success">Please check your e-mail for a confirmation message.</span>';
       }
     }
 
     return array(
       'message' => $message,
       'missing' => $missing,
-      'member' => $member,
-      'captcha_enabled' => $recaptcha_enabled
+      'member' => $member
     );
   }
 
