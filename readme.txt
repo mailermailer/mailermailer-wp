@@ -114,6 +114,24 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 
 == Changelog ==
 
+= 1.2.3 =
+* Update tested version to 4.6
+
+= 1.2.2 =
+* Fix quirky form field validation/highlighting
+
+= 1.2.1 =
+* Fix README.md and readme.txt accidentally introduced in 1.2.0
+
+= 1.2.0 =
+* Update tested version to 4.5.2
+* Add support for reCAPTCHA
+
+= 1.1.0 =
+* Update tested version to 4.4
+* Update mailermailer-api-php wrapper to version 1.0.6
+* Sync country code display with that of the web service itself
+
 = 1.0.6 =
 * Update tested version to 4.3
 
