@@ -25,7 +25,7 @@ class MailerMailer
 { 
 
   // Plugin version, used for cache-busting of style and script file references.
-  protected $version = '1.2.3';
+  protected $version = '1.2.4';
 
   // Unique identifier for your plugin.
   protected $plugin_slug = 'mailermailer';
