@@ -2,8 +2,8 @@
 Contributors: mailermailer
 Tags: mailermailer, email, newsletter, signup, marketing, plugin, widget, forms, email marketing
 Requires at least: 3.5
-Tested up to: 4.6
-Stable tag: 1.2.3
+Tested up to: 4.7
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 
 == Upgrade Notice ==
 
+= 1.2.4 =
+* Update tested version to 4.7
+
 = 1.2.3 =
 * Update tested version to 4.6
 
@@ -113,6 +116,9 @@ Please contact our [support team](http://www.mailermailer.com/support/index.rwp)
 * Update mailermailer-api-php wrapper to version 1.0.4
 
 == Changelog ==
+
+= 1.2.4 =
+* Update tested version to 4.7
 
 = 1.2.3 =
 * Update tested version to 4.6
